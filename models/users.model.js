@@ -27,8 +27,12 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Balance is required"],
         default: 0
+    },
+},
+    {
+        timestamps: true,
     }
-})
+);
 
 const userModel = mongoose.model("users", userSchema)
 
