@@ -14,6 +14,6 @@ userRoute.post("/login", login);
 userRoute.use(auth); //a middleware: it will determine wether the next route will go through or not,,using the next() in the auth function
 
 //protected routes
-userRoute.get("/dashboard", userDashboard   );
+userRoute.get("/dashboard", userDashboard);
 
 module.exports = userRoute;
