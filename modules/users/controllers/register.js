@@ -1,9 +1,9 @@
 
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const nodemailer = require("nodemailer");
-const jwtManager = require("../../../managers/jwtManager");
-const emailManager = require("../../../managers/email.Manager");
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
+import jwtManager from "../../../managers/jwtManager.js";
+import emailManager from "../../../managers/email.Manager.js";
 
 
 const register = async (req, res) => {
@@ -44,4 +44,4 @@ const register = async (req, res) => {
     })
 }
 
-module.exports = register; 
+export default register; 

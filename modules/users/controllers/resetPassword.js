@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const emailManager = require("../../../managers/email.Manager");
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import emailManager from "../../../managers/email.Manager.js";
 
 
 const resetPassword = async (req, res) => {
@@ -45,4 +45,4 @@ const resetPassword = async (req, res) => {
         message: "Password  reset successful!"
     });
 }
-module.exports = resetPassword;
+export default resetPassword;

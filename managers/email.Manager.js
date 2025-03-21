@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 const emailManager = async (to, text, html, subject) => {
     var transport = nodemailer.createTransport({
@@ -18,4 +18,4 @@ const emailManager = async (to, text, html, subject) => {
     });
 
 }
-module.exports = emailManager;
+export default emailManager;

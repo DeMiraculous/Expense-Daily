@@ -1,36 +1,46 @@
+import "express-async-errors";
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+import userRoute from "./modules/users/users.routes.js";
+import transactionRoute from "./modules/transactions/transactions.route.js";
+import errorHandler from "./handler/errorHandler.js";
 
-require("express-async-errors");
-const express = require("express");
-const errorHandler = require("./handler/errorHandler");
-const mongoose = require("mongoose");
-const userRoute = require("./modules/users/users.routes");
-const transactionModel = require("./models/transaction.model");
-const transactionRoute = require("./modules/transactions/transactions.route");
+// Load environment variables
+dotenv.config();
 
-require("dotenv").config();
 const app = express();
-
-//connect mongoose to database
-mongoose
-    .connect(process.env.mongoose_connection)
-    .then(() => {
-        console.log("Mongo connected successfully")
-    }).catch(() => {
-        console.log("Mongo connection failed")
-    })
-
-
-//Model initialization
-require("./models/users.model");
-require("./models/transaction.model")
-
+app.use(cors()) // allows our api endpoint to be accessed from anywhere
 app.use(express.json());
 
-app.use("/api/user", userRoute)
-app.use("/api/transaction", transactionRoute)
+// Connect to MongoDB with top-level await
+try {
+    await mongoose.connect(process.env.mongoose_connection);
+    console.log("Mongo connected successfully");
+} catch (error) {
+    console.error("Mongo connection failed", error);
+}
 
-app.use(errorHandler)
+// Model initialization 
+import "./models/users.model.js";
+import "./models/transactions.model.js";
 
-app.listen(5000, () => {
-    console.log("server started succesfully")
-})
+app.use("/api/user", userRoute);
+app.use("/api/transaction", transactionRoute);
+
+// Handle unknown routes
+app.all("*", (req, res, next) => {
+    res.status(404).json({
+        status: "failed",
+        message: "Not found!"
+    });
+});
+
+app.use(errorHandler);
+
+// Start the server
+const PORT = 5000;
+app.listen(PORT, () => {
+    console.log(`Server started successfully on port ${PORT}`);
+});

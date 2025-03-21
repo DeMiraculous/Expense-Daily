@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const userDashboard = async (req, res) => {
     const userModel = mongoose.model("users");
@@ -22,4 +22,4 @@ const userDashboard = async (req, res) => {
         transactions
     });
 };
-module.exports = userDashboard;
+export default userDashboard;

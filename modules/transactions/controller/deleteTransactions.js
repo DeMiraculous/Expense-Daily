@@ -1,63 +1,69 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
-const userModel = require("../../../models/users.model");
+import mongoose from "mongoose";
+import validator from "validator";
+import transactionsModel from "../../../models/transactions.model.js";
+import userModel from "../../../models/users.model.js";
 
 const deleteTransaction = async (req, res) => {
+    try {
+        const transactionsModel = mongoose.model("transactions");
+        const userModel = mongoose.model("users");
 
-    const transactionsModel = mongoose.model("transactions");
-    const userModel = mongoose.model("users");
+        const { transaction_id } = req.params;
+        if (!validator.isMongoId(transaction_id.toString())) throw "Invalid Id"
 
-    const { transaction_id } = req.params;
-    if (!validator.isMongoId(transaction_id.tiString())) throw "Invalid Id"
+        const getTransaction = await transactionsModel.findOne({
+            _id: transaction_id,
+        });
 
-    const getTransaction = await transactionsModel.findOne({
-        _id: transaction_id,
-    });
+        if (!getTransaction) throw "transaction not found";
 
-    if (!getTransaction) throw "transaction not found";
+        console.log(getTransaction);
 
-    console.log(getTransaction);
+        if (getTransaction.transaction_type === "income") {
 
-    if (getTransaction.transaction_type === "income") {
-
-        await userModel.updateOne({
-            _id: getTransaction.user,
-        },
-            {
-                $inc: {
-                    balance: getTransaction.amount * -1,
-                }
+            await userModel.updateOne({
+                _id: getTransaction.user,
             },
-            {
-                runValidators: true,
-            }
-        );
-
-    } else {
-
-        await userModel.updateOne({
-            _id: getTransaction.user,
-        },
-            {
-                $inc: {
-                    balance: getTransaction.amount,
+                {
+                    $inc: {
+                        balance: getTransaction.amount * -1,
+                    }
+                },
+                {
+                    runValidators: true,
                 }
-            },
-            {
-                runValidators: true,
-            }
-        );
+            );
 
+        } else {
+
+            await userModel.updateOne({
+                _id: getTransaction.user,
+            },
+                {
+                    $inc: {
+                        balance: getTransaction.amount,
+                    }
+                },
+                {
+                    runValidators: true,
+                }
+            );
+
+        }
+
+
+        await transactionsModel.deleteOne({
+            _id: transaction_id,
+        });
+
+        res.status({
+            status: "Delete Successfully!",
+            message: "Transaction successfully deleted"
+
+        });
+
+    } catch (error) {
+        return res.status(500).json({ status: "failed", error: error.message || error });
     }
 }
-
-await transactionsModel.deleteOne({
-    _id: transaction_id,
-});
-
-res.status({
-    status: "Delete Successfully!",
-    message: "Transaction successfully deleted"
-
-});
-module.exports = deleteTransaction;
+export default deleteTransaction;

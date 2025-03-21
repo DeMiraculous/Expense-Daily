@@ -1,4 +1,4 @@
-const jsonwebtoken = require("jsonwebtoken");
+import jsonwebtoken from "jsonwebtoken";
 
 const jwtManager = (user) => {
     const accessToken = jsonwebtoken.sign({
@@ -9,4 +9,4 @@ const jwtManager = (user) => {
     );
     return jsonwebtoken;
 };
-module.exports = jwtManager;
+export default jwtManager;

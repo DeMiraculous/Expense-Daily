@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+import mongoose from "mongoose";
+import validator  from "validator";
 
 const getTransactions = async (req, res) => {
     const transactionModel = mongoose.model("transactions");
@@ -15,4 +15,4 @@ const getTransactions = async (req, res) => {
 
     });
 }
-module.exports = getTransactions;
+export default getTransactions;

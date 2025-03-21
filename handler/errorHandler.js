@@ -1,4 +1,4 @@
-const { response } = require("express")
+import { response } from "express";
 
 const errorHandler = (error, req, res, next) => {
     if (error) {
@@ -18,4 +18,4 @@ const errorHandler = (error, req, res, next) => {
         next()
     }
 }
-module.exports = errorHandler;
+export default errorHandler; 

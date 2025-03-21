@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt")
-const jsonwebtoken = require("jsonwebtoken");
-const jwtManager = require("../../../managers/jwtManager");
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jsonwebtoken from "jsonwebtoken";
+import jwtManager from "../../../managers/jwtManager.js";
 
 const login = async (req, res) => {
 
@@ -26,4 +26,4 @@ const login = async (req, res) => {
     });
 };
 
-module.exports = login;
+export default login;

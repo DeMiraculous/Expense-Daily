@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const nodemailer = require("nodemailer");
-const emailManager = require("../../../managers/email.Manager");
+import mongoose from "mongoose";
+import nodemailer from "nodemailer";
+import emailManager from "../../../managers/email.Manager.js";
 
 
 const forgotPassword = async (req, res) => {
@@ -40,4 +40,4 @@ const forgotPassword = async (req, res) => {
     });
 
 }
-module.exports = forgotPassword;
+export default forgotPassword;

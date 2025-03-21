@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+import mongoose from "mongoose";
+import validator from "validator";
 
 const addIncome = async (req, res) => {
     const userModel = mongoose.model("user");
@@ -41,4 +41,4 @@ const addIncome = async (req, res) => {
         message: "Income added successfully!"
     });
 };
-module.exports = addIncome;
+export default addIncome;
