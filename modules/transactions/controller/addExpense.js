@@ -13,7 +13,7 @@ const addExpense = async (req, res) => {
     if (remarks.length < 5) throw "Remarks must be atleast 5 characters long!";
 
     console.log(validator.isNumeric(amount.toString()))
-
+    
     if (!validator.isNumeric(amount.toString())) throw "Amount must be a number";
     if (amount < 0 ) throw "Amount must not be negaive";
 

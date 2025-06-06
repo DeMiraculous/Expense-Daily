@@ -7,9 +7,9 @@ const editTransaction = async (req, res) => {
     const { transaction_id, remarks, amount, transaction_type } = req.body;
 
     if (!transaction_id) throw "Transaction_id is required";
-    if (transaction_type !=="income" && transaction_type !== "expense") throw "Transaction_type is invalid";
+    if (transaction_type !== "income" && transaction_type !== "expense") throw "Transaction_type is invalid";
 
-    if (!validator.isMongoId(transaction_id.tiString())) throw "Invalid Id"
+    if (!validator.isMongoId(transaction_id.toString())) throw "Invalid Id"
 
     const getTransaction = await transactionsModel.findOne({
         _id: transaction_id,
@@ -27,7 +27,9 @@ const editTransaction = async (req, res) => {
             runValidators: true
         })
     res.status(200).json({
-
+        status: "success",
+        message: "Transaction deleted successfully",
+        transaction_id: transaction_id,
     })
 }
 export default editTransaction;

@@ -7,6 +7,6 @@ const jwtManager = (user) => {
     },
         process.env.Jwt_Key
     );
-    return jsonwebtoken;
+    return accessToken;
 };
 export default jwtManager;
